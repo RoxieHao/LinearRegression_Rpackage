@@ -66,10 +66,6 @@ lr <- function(X, Y, I) {
   ## p_value for t_statistics
   p_1 = stats::pt(q = abs(t_stat), df = n - p)
   p_value = c(2 * (1 - p_1))
-  options(digits = 4)
-  formatted_p_value = format(p_value, scientific = TRUE)
-
-
 
   ## R_2
   Y_bar = mean(Y)
@@ -85,18 +81,19 @@ lr <- function(X, Y, I) {
   MSE = SSE / df2
   F_stat = MSR / MSE
   F_p = stats::pf(F_stat, df1, df2, lower.tail = FALSE)
-  options(digits = 4)
-  formatted_F_p = format(F_p, scientific = TRUE)
 
 
-  ## create the overall table for coefficients
+  # create the overall table for coefficients
   coefficient_table = data.frame(
-    Estimate = round(beta_hat, digits = 4),
-    'Std.Error' = round(se_beta_hat, digits = 4),
-    't value' = round(t_stat, digits = 4),
-    'Pr' = formatted_p_value
+    beta_hat,
+    se_beta_hat,
+    t_stat,
+    p_value
   )
+  coefficient_table = as.matrix(coefficient_table)
+  colnames(coefficient_table) = c("Estimate","Std. Error", "t value", "Pr(>|t|)")
   row.names(coefficient_table)[1] = "(Intercept)"
+
   note1 <-paste("R_squared value: ", round(R_2, digits = 4))
   note2 <-paste(
     "F-statistic: ",
@@ -106,7 +103,7 @@ lr <- function(X, Y, I) {
     " and ",
     df2,
     " DF, p-value: ",
-    formatted_F_p
+    F_p
   )
 
   result <- list(
@@ -117,3 +114,4 @@ lr <- function(X, Y, I) {
 
   return(result)
 }
+
