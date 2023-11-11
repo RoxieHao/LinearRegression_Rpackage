@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/RoxieHao/LinearRegression_Rpackage/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RoxieHao/LinearRegression_Rpackage/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/RoxieHao/LinearRegression_Rpackage/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RoxieHao/LinearRegression_Rpackage?branch=main)
 <!-- badges: end -->
 
 The goal of LinearRegression is to fit linear models, including both
