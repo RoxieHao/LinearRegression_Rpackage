@@ -70,7 +70,7 @@ system.time({
   }
 })
 
-library(bench)
+
 speed = bench::mark(model1$coefficients, summary(model2)$coef)
 print(speed)
 ```
