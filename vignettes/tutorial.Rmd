@@ -1,0 +1,78 @@
+---
+title: "tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(LinearRegression)
+```
+
+### Aim of the package
+
+This package include a function called lr(), which is used to fit linear models. The output contains the estimated coefficient, standard error, t value and p value for each variable, and R squared value, residual standard error and F statistics.
+
+### How it works
+
+**1. library the package**
+```{r}
+library(LinearRegression)
+```
+
+**2. data preparation**
+In this example, we will use a build-in function of R named iris and find the association between Sepal.Length and Sepal.Width, adjusting for Petal.Length.
+
+```{r data preparation}
+head(iris)
+X = iris[,c(2,3)]
+Y = iris$Sepal.Length
+```
+
+**3. use function lr() in package "LinearRegression"**
+
+```{r}
+model1 = lr(X,Y,TRUE)
+print(model1)
+```
+
+The first input is the matrix or dataframe contains all covariates of interest. The second input is the dependent variable of interest. The last input is a logical operater of whether the model including an intercept. If I = TRUE, then intercept will be fitted for the model, otherwise, there will not be an intercept in the fitted model. After applying for the "lr()" function, a list includes a table of estimated coefficients,standard error, t value and p value, R squared value and F statistics will be printed, so you can figure out whether there is any significant association between dependent variable and covariates.
+
+### Comparing lr() with lm() function (build-in function)
+
+**1. comparing the fitted models between two functions**
+```{r comparison of result}
+
+model2 = lm(Sepal.Length ~ Sepal.Width+Petal.Length, data = iris)
+summary(model2)
+
+```
+
+By comparing the model fitted by lr() and lm(), we can get the same result.
+
+**2. comparing the running speed of two functions**
+
+```{r comparision of speed}
+system.time({
+  for(i in 1:1000) {
+    model1 = lr(X,Y,TRUE)
+  }
+})
+
+system.time({
+  for(i in 1:1000) {
+    model2 = lm(Sepal.Length ~ Sepal.Width+Petal.Length, data = iris)
+  }
+})
+```
+
+Since the results are in different forms, we cannot use benckmark to test the running speed of the two functions. So we looped the fitting process of the two models 1000 times and used system.time() to calculate the required time. As a result, lm() function is a little faster than lr() function.
