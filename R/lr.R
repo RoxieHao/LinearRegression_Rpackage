@@ -69,13 +69,22 @@ lr <- function(X, Y, I) {
 
   ## R_2
   Y_bar = mean(Y)
-  SSY = sum((Y - Y_bar) ^ 2)
+  if(all(X[,1] == 1)) {
+    SSY = sum((Y - Y_bar) ^ 2) ## multiple linear regression
+  }else{
+    SSY = sum(Y  ^ 2)  ## multiple linear regression without intercept
+  }
   (SSE = sum(epsilon_hat ^ 2))
   (SSR = SSY - SSE)
   (R_2 = SSR / SSY)
 
   ## F statistic
-  df1 = (p - 1)
+  if(all(X[,1] == 1)) {
+    df1 = (p - 1) ## multiple linear regression
+  }else{
+      df1 = p  ## multiple linear regression without intercept
+    }
+
   df2 = (n - p)
   MSR = SSR / df1
   MSE = SSE / df2
@@ -92,7 +101,9 @@ lr <- function(X, Y, I) {
   )
   coefficient_table = as.matrix(coefficient_table)
   colnames(coefficient_table) = c("Estimate","Std. Error", "t value", "Pr(>|t|)")
-  row.names(coefficient_table)[1] = "(Intercept)"
+  if(all(X[,1] == 1)) {
+    row.names(coefficient_table)[1] = "(Intercept)" ## multiple linear regression
+  }
 
   note1 <-paste("R_squared value: ", round(R_2, digits = 4))
   note2 <-paste(
