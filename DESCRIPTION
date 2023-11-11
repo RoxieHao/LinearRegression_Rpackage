@@ -12,5 +12,7 @@ RoxygenNote: 7.2.3
 License: CC BY 4.0
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/testthat/edition: 3
