@@ -58,21 +58,8 @@ By comparing the model fitted by lr() and lm(), we can get the same result.
 **2. comparing the running speed of two functions**
 
 ```{r comparision of speed}
-system.time({
-  for(i in 1:1000) {
-    lr(X,Y,TRUE)
-  }
-})
-
-system.time({
-  for(i in 1:1000) {
-    summary(lm(Sepal.Length ~ Sepal.Width+Petal.Length, data = iris))
-  }
-})
-
-
 speed = bench::mark(model1$coefficients, summary(model2)$coef)
 print(speed)
 ```
 
-Since the results are in different forms, we cannot use benckmark to test the running speed of the two functions. So we looped the fitting process of the two models 1000 times and used system.time() to calculate the required time. As a result, lm() function is a little faster than lr() function.
+By using bench mark, we can calculate the whole time spent by each function and we can find that lr() is much faster than lm().
